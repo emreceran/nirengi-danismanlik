@@ -297,6 +297,13 @@
     ].map(function (o, i) { return '<div class="' + ((i === 3 && s.incele.length) || (i === 5 && s.muk.length) ? "vurgulu" : "") + '"><span>' + o[0] + "</span><strong>" + o[1] + "</strong></div>"; }).join("");
 
     var notlar = durum.notlar.slice();
+    var tekrarli = s.urunler.filter(function (u) { return u.alim > 1; }).length;
+    var uyari = "";
+    if (!tekrarli) uyari = "Yüklenen faturalarda aynı ürünün birden fazla alımı yok, bu yüzden fiyat karşılaştırması yapılamadı. " +
+      "Araç bir dönemin faturalarıyla çalışır: örneğin son 6 ya da 12 ayın tüm alış faturalarını birlikte yükleyin.";
+    else if (fc && fc < 10) uyari = "Yalnızca " + fc + " fatura yüklendi. Karşılaştırmanın anlamlı olması için bir dönemin (örneğin son 6–12 ay) tüm alış faturalarını yüklemenizi öneririz.";
+    $("#donem-uyari").hidden = !uyari;
+    $("#donem-uyari").textContent = uyari;
     if (durum.tekrarDosya) notlar.push(durum.tekrarDosya + " dosya daha önce yüklenen bir faturanın kopyasıydı; bir kez sayıldı.");
     if (durum.iade) notlar.push(durum.iade + " iade faturası fiyat karşılaştırmasına katılmadı.");
     $("#notlar").innerHTML = notlar.length ? "<ul>" + notlar.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>" : "";
@@ -384,25 +391,35 @@
       ["KD2026000788", "2026-09-16", K, "1111111111", [["KUTU PROF.40X40X2", 1000, "KGM", 46.4], ["SAC 1,5MM DKP", 650, "KGM", 41.2]]]
     ];
     fat.forEach(function (f) { xmlIsle(ornekXml(f[0], f[1], f[2], f[3], f[4]), f[0] + ".xml"); });
-    durum.notlar.push("Örnek veri: dört tedarikçiden 15 kurgusal e-fatura.");
+    durum.notlar.push("Örnek veri: dört tedarikçiden, beş aylık dönemde 15 kurgusal e-fatura.");
+    durum.ornek = true;
     $("#dosya-durum").textContent = "Örnek veri yüklendi.";
     goster();
   }
 
-  function sifirla() { durum = { kalemler: [], faturalar: {}, notlar: [] }; }
+  function sifirla() {
+    durum = { kalemler: [], faturalar: {}, notlar: [] };
+    $("#temizle").hidden = true;
+    $("#sonuc").hidden = true;
+    $("#dosya-durum").textContent = "";
+  }
 
+  // Yeni dosyalar öncekilere eklenir (faturalar farklı klasörlerde olabilir); aynı fatura iki kez sayılmaz.
   function basla(liste) {
     if (!liste || !liste.length) return;
-    sifirla();
+    if (durum.ornek) sifirla();
+    durum.notlar = [];
     $("#dosya-durum").textContent = liste.length + " dosya okunuyor…";
     dosyalariOku(liste).then(function () {
+      durum.dosyaSayisi = (durum.dosyaSayisi || 0) + liste.length;
       if (!durum.kalemler.length) {
         $("#dosya-durum").textContent = "Okunabilir fatura kalemi bulunamadı.";
         $("#sonuc").hidden = true;
         if (durum.notlar.length) alert(durum.notlar.join("\n"));
         return;
       }
-      $("#dosya-durum").textContent = liste.length + " dosya okundu.";
+      $("#dosya-durum").textContent = "Toplam " + durum.dosyaSayisi + " dosya okundu. Başka dosya da ekleyebilirsiniz.";
+      $("#temizle").hidden = false;
       goster();
     });
   }
@@ -414,6 +431,7 @@
     ["dragleave", "drop"].forEach(function (o) { alan.addEventListener(o, function (e) { e.preventDefault(); alan.classList.remove("ustunde"); }); });
     alan.addEventListener("drop", function (e) { basla(e.dataTransfer.files); });
     $("#ornek").addEventListener("click", ornekYukle);
+    $("#temizle").addEventListener("click", function (e) { e.preventDefault(); sifirla(); girdi.value = ""; });
     $("#esik").addEventListener("change", function () { if (durum.kalemler.length) goster(); });
     $("#pencere").addEventListener("change", function () { if (durum.kalemler.length) goster(); });
     $("#csv").addEventListener("click", csvIndir);

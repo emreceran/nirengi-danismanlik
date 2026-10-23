@@ -33,15 +33,17 @@
 <section class="sayfa-bas arac-bas"><div class="kap">
 <p class="kucuk-bas"><a href="index.html">Araçlar</a> / Ücretsiz</p>
 <h1>Fatura fiyat kontrolü</h1>
-<p class="giris">Alış faturalarınızı yükleyin; aynı ürüne ödediğiniz fiyatların zaman içindeki değişimini, ortalamadan sapan alımları,
-olası fazla ödemeyi ve mükerrer şüphesi taşıyan faturaları görün.</p>
+<p class="giris">Bir dönemin, örneğin son 6 ya da 12 ayın tüm alış faturalarını toplu yükleyin; aynı ürüne ödediğiniz fiyatların dönem içindeki
+değişimini, ortalamadan sapan alımları, olası fazla ödemeyi ve mükerrer şüphesi taşıyan faturaları görün.</p>
 </div></section>
 <section class="bolum ust-az arac-giris"><div class="kap arac-ust">
   <label class="yukle" id="yukle">
     <input type="file" id="dosyalar" multiple accept=".xml,.zip,.xlsx,.xls,.csv,.ods">
-    <strong>Dosyaları buraya bırakın ya da seçin</strong>
-    <span>E-fatura XML ya da ZIP dosyaları · Excel / CSV alış faturası kalem listesi</span>
+    <strong>Bir dönemin faturalarını buraya bırakın</strong>
+    <span>Örneğin son 6–12 ayın tüm alış faturaları: e-fatura XML / ZIP dosyaları ya da Excel / CSV kalem listesi.
+    Tek fatura yetmez; karşılaştırma için aynı ürünün birden fazla alımı gerekir.</span>
     <em id="dosya-durum"></em>
+    <a href="#" id="temizle" hidden>Yüklenenleri temizle</a>
   </label>
   <div class="arac-yan">
     <label>Sapma eşiği (%)<input id="esik" type="number" min="1" max="100" value="10"></label>
@@ -52,6 +54,7 @@ olası fazla ödemeyi ve mükerrer şüphesi taşıyan faturaları görün.</p>
   </div>
 </div></section>
 <section id="sonuc" class="arac-sonuc" hidden><div class="kap">
+  <p class="donem-uyari" id="donem-uyari" hidden></p>
   <div class="ozet-izgara" id="ozet"></div>
   <div class="arac-not" id="notlar"></div>
   <div class="sonuc-bas"><h2 id="incele-baslik">İncelenecek alımlar</h2><button class="metin-bag dugme-bag" id="csv" type="button">Listeyi indir (CSV) ↓</button></div>
@@ -71,10 +74,12 @@ olası fazla ödemeyi ve mükerrer şüphesi taşıyan faturaları görün.</p>
   <div><h2>Nasıl kullanılır?</h2></div>
   <div class="arac-yardim">
     <h3>E-fatura dosyaları</h3>
-    <p>Gelen e-faturalarınızı e-fatura portalınızdan, entegratörünüzün panelinden ya da muhasebe programınızdan XML veya ZIP olarak indirin.
-    Birden çok dosyayı aynı anda seçebilir, klasördeki tüm faturaları sürükleyip bırakabilirsiniz. ZIP içindeki XML dosyaları otomatik okunur.</p>
+    <p>Araç tek bir faturayı değil, bir dönemin faturalarını birlikte inceler. E-fatura portalınızda, entegratörünüzün panelinde ya da muhasebe
+    programınızda tarih aralığı seçerek (örneğin son 6 ya da 12 ay) gelen faturaları toplu olarak XML veya ZIP biçiminde indirin.
+    Klasördeki tüm dosyaları birlikte seçebilir ya da sürükleyip bırakabilirsiniz; ZIP içindeki XML dosyaları otomatik okunur.
+    Faturalarınız birkaç klasördeyse dosyaları sırayla ekleyebilirsiniz; aynı fatura iki kez yüklenirse bir kez sayılır.</p>
     <h3>Excel / CSV listesi</h3>
-    <p>Muhasebe programınızdan alış faturası kalem listesini Excel'e aktarın. Başlık satırında <b>Tarih</b>, <b>Tedarikçi</b> (ya da Cari),
+    <p>Muhasebe programınızdan, seçtiğiniz dönemin alış faturası kalem listesini Excel'e aktarın. Başlık satırında <b>Tarih</b>, <b>Tedarikçi</b> (ya da Cari),
     <b>Fatura No</b>, <b>Ürün</b> (ya da Stok Adı / Açıklama), <b>Miktar</b>, <b>Birim</b> ve <b>Birim Fiyat</b> (ya da Tutar) sütunları bulunmalı.</p>
     <h3>Sonuçları nasıl okumalı?</h3>
     <p>Fiyatların sürekli arttığı dönemlerde her yeni alım bir miktar pahalı görünür; bu yüzden karşılaştırma tüm geçmişle değil, seçtiğiniz pencere içindeki önceki alımlarla yapılır.

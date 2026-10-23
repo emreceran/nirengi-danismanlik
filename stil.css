@@ -367,3 +367,5 @@ p { margin: 0 0 1em; }
   .sektor-izgara { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 560px) { .sektor-izgara { grid-template-columns: 1fr; } }
+.yukle #temizle { position: relative; z-index: 1; font-size: .85rem; color: var(--soluk); }
+.donem-uyari { margin: 24px 0 0; padding: 16px 20px; background: #fbf1dc; border-left: 3px solid #c08a1e; color: var(--metin); }
