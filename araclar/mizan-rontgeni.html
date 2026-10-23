@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mizan röntgeni | Nirengi Danışmanlık</title>
+<meta name="description" content="Mizanınızı yükleyin; likidite, borçluluk, kârlılık, işletme sermayesi ve kasa, ortaklar, KDV, amortisman kontrolleriyle ücretsiz ön değerlendirme alın. Dosya bilgisayarınızdan çıkmaz.">
+<link rel="canonical" href="https://emreceran.github.io/nirengi-danismanlik/araclar/mizan-rontgeni.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mizan röntgeni | Nirengi Danışmanlık">
+<meta property="og:description" content="Mizanınızı yükleyin; likidite, borçluluk, kârlılık, işletme sermayesi ve kasa, ortaklar, KDV, amortisman kontrolleriyle ücretsiz ön değerlendirme alın. Dosya bilgisayarınızdan çıkmaz.">
+<meta property="og:url" content="https://emreceran.github.io/nirengi-danismanlik/araclar/mizan-rontgeni.html">
+<meta property="og:locale" content="tr_TR">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../stil.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
+<script src="mizan.js" defer></script>
+</head>
+<body>
+<header class="ust">
+  <div class="kap ust-ic">
+    <a class="logo" href="../index.html" aria-label="Nirengi Danışmanlık ana sayfa"><span class="wm">N<span class="i">I</span>RENG<span class="i">I</span></span><span class="wm-alt">Danışmanlık</span></a>
+    <button class="menu-dugme" aria-label="Menü" aria-expanded="false" onclick="var n=document.querySelector('.ust nav');var a=n.classList.toggle('acik');this.setAttribute('aria-expanded',a)"><span></span><span></span></button>
+    <nav><a href="../hizmetler.html">Hizmetler</a><a href="../araclar/index.html" aria-current=page>Araçlar</a><a href="../ekip.html">Ekip</a><a href="../blog/index.html">Yazılar</a><a href="../iletisim.html">İletişim</a><a class="nav-cta" href="../iletisim.html">Görüşme talep edin</a></nav>
+  </div>
+</header>
+<main>
+
+<section class="sayfa-bas arac-bas"><div class="kap">
+<p class="kucuk-bas"><a href="index.html">Araçlar</a> / Ücretsiz</p>
+<h1>Mizan röntgeni</h1>
+<p class="giris">Mizanınızı Excel olarak yükleyin; likidite, borçluluk, kârlılık ve işletme sermayesi göstergelerini, kasa, ortaklar,
+devreden KDV ve amortisman kontrolleriyle birlikte tek sayfada görün.</p>
+</div></section>
+<section class="bolum ust-az arac-giris"><div class="kap arac-ust">
+  <label class="yukle" id="yukle">
+    <input type="file" id="dosya" accept=".xlsx,.xls,.csv,.ods">
+    <strong>Mizan dosyasını buraya bırakın ya da seçin</strong>
+    <span>Excel ya da CSV · Tekdüzen Hesap Planı · hesap kodu ve borç / alacak bakiyesi sütunları</span>
+    <em id="dosya-durum"></em>
+  </label>
+  <div class="arac-yan">
+    <label>Mizan dönemi<select id="ay"><option value="1">1 aylık</option><option value="2">2 aylık</option><option value="3">3 aylık</option><option value="4">4 aylık</option><option value="5">5 aylık</option><option value="6">6 aylık</option><option value="7">7 aylık</option><option value="8">8 aylık</option><option value="9">9 aylık</option><option value="10">10 aylık</option><option value="11">11 aylık</option><option value="12" selected>12 aylık</option></select></label>
+    <button class="dugme ikincil" id="ornek" type="button">Örnek mizanla deneyin</button>
+    <p class="gizlilik">Dosyalarınız bilgisayarınızdan çıkmaz. Analiz tamamen tarayıcınızda yapılır; hiçbir veri sunucumuza ya da üçüncü bir tarafa gönderilmez, kaydedilmez.</p>
+  </div>
+</div></section>
+<section id="sonuc" class="arac-sonuc" hidden><div class="kap">
+  <div class="sonuc-bas"><div><h2>Ön değerlendirme</h2><p class="soluk" id="kaynak"></p></div>
+  <button class="metin-bag dugme-bag" id="yazdir" type="button">Yazdır / PDF ↓</button></div>
+  <div class="ozet-izgara bes" id="ana-rakam"></div>
+  <div class="sayac" id="sayac"></div>
+  <div class="uyari-kutu" id="uyarilar"></div>
+  <div id="bolumler"></div>
+  <p class="soluk kucuk">Bu değerlendirme mizan bakiyelerinden otomatik olarak üretilen bir ön göstergedir; denetim ya da mali müşavirlik görüşü değildir.
+  Eşikler genel kabul görmüş başlangıç değerleridir ve sektöre göre farklılık gösterebilir.</p>
+  <div class="arac-cta"><div><h3>Bu sonuçları birlikte yorumlayalım</h3><p>İlk görüşme ücretsizdir. Mali müşavirimiz mizanınızı sizinle birlikte okur ve öncelikli konuları belirler.</p></div>
+  <a class="dugme" href="../iletisim.html">Görüşme talep edin</a></div>
+</div></section>
+<section class="bolum ton"><div class="kap iki-sutun">
+  <div><h2>Nasıl kullanılır?</h2></div>
+  <div class="arac-yardim">
+    <h3>Mizanı nereden alırım?</h3>
+    <p>Muhasebe programınızdan ya da mali müşavirinizden dönem mizanını Excel olarak isteyin. Ana hesap (3 haneli) ya da alt hesap kırılımlı mizan olabilir;
+    alt hesaplar otomatik olarak ana hesaplarda toplanır.</p>
+    <h3>Dosya biçimi</h3>
+    <p>Başlık satırında <b>Hesap Kodu</b> ile birlikte <b>Borç Bakiye</b> ve <b>Alacak Bakiye</b> (ya da <b>Borç</b> ve <b>Alacak</b>) sütunları bulunmalı.
+    Hesap kodları Tekdüzen Hesap Planı'na göre olmalıdır.</p>
+    <h3>Dönem seçimi</h3>
+    <p>Mizan yılın ilk dokuz ayını kapsıyorsa "9 aylık" seçin; alacak, stok ve borç gün sayıları bu süreye göre hesaplanır.</p>
+    <p>Göstergelerin ne anlattığını <a href="../blog/patron-mizandan-ne-okumali.html">Patron mizandan ne okumalı?</a> yazımızda bulabilirsiniz.</p>
+  </div>
+</div></section>
+
+</main>
+<footer class="alt">
+  <div class="kap">
+    <div class="alt-ust">
+      <a class="logo" href="../index.html" aria-label="Nirengi Danışmanlık ana sayfa"><span class="wm">N<span class="i">I</span>RENG<span class="i">I</span></span><span class="wm-alt">Danışmanlık</span></a>
+      <p>Mali müşavirlik, finans danışmanlığı ve kurumsal sistemler. Konya.</p>
+    </div>
+    <div class="alt-izgara">
+      <div><h4>Hizmetler</h4><a href="../hizmetler.html#mali-analiz">Mali analiz ve yönetim raporu</a><a href="../hizmetler.html#nakit">Nakit akışı ve finansman</a><a href="../hizmetler.html#alacak">Alacak ve tahsilat yönetimi</a><a href="../hizmetler.html#maliyet">Maliyet ve kârlılık</a><a href="../hizmetler.html#satin-alma">Satın alma ve fatura analizi</a><a href="../hizmetler.html#stok">Stok analizi</a><a href="../hizmetler.html#erp">ERP ve dijital dönüşüm</a><a href="../hizmetler.html#pano">Yönetim panosu ve süreç tasarımı</a><a href="../hizmetler.html#mevzuat">Vergi, mevzuat ve mali müşavirlik</a><a href="../hizmetler.html#tesvik">Teşvik ve hibe danışmanlığı</a><a href="../hizmetler.html#konkordato">Konkordato ve finansal yeniden yapılandırma</a></div>
+      <div><h4>Nirengi</h4><a href="../araclar/index.html">Ücretsiz araçlar</a><a href="../ekip.html">Ekip</a><a href="../blog/index.html">Yazılar</a><a href="../iletisim.html">İletişim</a></div>
+      <div><h4>İletişim</h4><a href="mailto:emrecrn@gmail.com">emrecrn@gmail.com</a><span>Konya</span></div>
+    </div>
+    <div class="telif"><span>© 2026 Nirengi Danışmanlık</span><span>Bu sitedeki yazılar genel bilgilendirme amaçlıdır.</span></div>
+  </div>
+</footer>
+</body>
+</html>

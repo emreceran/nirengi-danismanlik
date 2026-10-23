@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fatura fiyat kontrolü | Nirengi Danışmanlık</title>
+<meta name="description" content="E-fatura XML/ZIP ya da Excel alış listenizi yükleyin; ortalamadan sapan fiyatları, olası fazla ödemeyi ve mükerrer faturaları görün. Ücretsiz, dosyalar bilgisayarınızdan çıkmaz.">
+<link rel="canonical" href="https://emreceran.github.io/nirengi-danismanlik/araclar/fatura-fiyat-kontrolu.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fatura fiyat kontrolü | Nirengi Danışmanlık">
+<meta property="og:description" content="E-fatura XML/ZIP ya da Excel alış listenizi yükleyin; ortalamadan sapan fiyatları, olası fazla ödemeyi ve mükerrer faturaları görün. Ücretsiz, dosyalar bilgisayarınızdan çıkmaz.">
+<meta property="og:url" content="https://emreceran.github.io/nirengi-danismanlik/araclar/fatura-fiyat-kontrolu.html">
+<meta property="og:locale" content="tr_TR">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../stil.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
+<script src="fatura.js" defer></script>
+</head>
+<body>
+<header class="ust">
+  <div class="kap ust-ic">
+    <a class="logo" href="../index.html" aria-label="Nirengi Danışmanlık ana sayfa"><span class="wm">N<span class="i">I</span>RENG<span class="i">I</span></span><span class="wm-alt">Danışmanlık</span></a>
+    <button class="menu-dugme" aria-label="Menü" aria-expanded="false" onclick="var n=document.querySelector('.ust nav');var a=n.classList.toggle('acik');this.setAttribute('aria-expanded',a)"><span></span><span></span></button>
+    <nav><a href="../hizmetler.html">Hizmetler</a><a href="../araclar/index.html" aria-current=page>Araçlar</a><a href="../ekip.html">Ekip</a><a href="../blog/index.html">Yazılar</a><a href="../iletisim.html">İletişim</a><a class="nav-cta" href="../iletisim.html">Görüşme talep edin</a></nav>
+  </div>
+</header>
+<main>
+
+<section class="sayfa-bas arac-bas"><div class="kap">
+<p class="kucuk-bas"><a href="index.html">Araçlar</a> / Ücretsiz</p>
+<h1>Fatura fiyat kontrolü</h1>
+<p class="giris">Alış faturalarınızı yükleyin; aynı ürüne ödediğiniz fiyatların zaman içindeki değişimini, ortalamadan sapan alımları,
+olası fazla ödemeyi ve mükerrer şüphesi taşıyan faturaları görün.</p>
+</div></section>
+<section class="bolum ust-az arac-giris"><div class="kap arac-ust">
+  <label class="yukle" id="yukle">
+    <input type="file" id="dosyalar" multiple accept=".xml,.zip,.xlsx,.xls,.csv,.ods">
+    <strong>Dosyaları buraya bırakın ya da seçin</strong>
+    <span>E-fatura XML ya da ZIP dosyaları · Excel / CSV alış faturası kalem listesi</span>
+    <em id="dosya-durum"></em>
+  </label>
+  <div class="arac-yan">
+    <label>Sapma eşiği (%)<input id="esik" type="number" min="1" max="100" value="10"></label>
+    <label>Karşılaştırma penceresi<select id="pencere"><option value="30">Son 30 gün</option><option value="60">Son 60 gün</option>
+    <option value="90" selected>Son 90 gün</option><option value="180">Son 180 gün</option><option value="365">Son 1 yıl</option></select></label>
+    <button class="dugme ikincil" id="ornek" type="button">Örnek veriyle deneyin</button>
+    <p class="gizlilik">Dosyalarınız bilgisayarınızdan çıkmaz. Analiz tamamen tarayıcınızda yapılır; hiçbir veri sunucumuza ya da üçüncü bir tarafa gönderilmez, kaydedilmez.</p>
+  </div>
+</div></section>
+<section id="sonuc" class="arac-sonuc" hidden><div class="kap">
+  <div class="ozet-izgara" id="ozet"></div>
+  <div class="arac-not" id="notlar"></div>
+  <div class="sonuc-bas"><h2 id="incele-baslik">İncelenecek alımlar</h2><button class="metin-bag dugme-bag" id="csv" type="button">Listeyi indir (CSV) ↓</button></div>
+  <p class="soluk">Aynı ürünün seçilen pencere içindeki önceki alımlarının ortalamasına göre eşiği aşan alımlar. En büyük olası fazla ödeme en üstte.</p>
+  <div id="incele"></div>
+  <h2 id="muk-baslik">Mükerrer şüphesi</h2>
+  <p class="soluk">Aynı tedarikçiden, aynı tutarda ve beş gün içinde kesilmiş farklı numaralı faturalar; Excel listelerinde birebir aynı girilmiş kalemler. İkinci kopyalar fazla ödeme toplamına katılmaz.</p>
+  <div id="muk"></div>
+  <h2>Ürünler</h2>
+  <p class="soluk">Ürünler adlarına ve birimlerine göre eşleştirilir. Farklı adla yazılmış aynı ürün ayrı satırda görünebilir; ayrıntılı eşleştirme için
+  <a href="../sablonlar/nirengi-satin-alma-fiyat-takip.xlsx" download>Excel şablonumuzu</a> kullanabilirsiniz.</p>
+  <div id="urun"></div>
+  <div class="arac-cta"><div><h3>Ayrıntılı inceleme ister misiniz?</h3><p>Ürün eşleştirmesi, tedarikçi sözleşmeleri ve iskonto kontrolüyle son 12 ayın alımlarını birlikte inceleyelim.</p></div>
+  <a class="dugme" href="../iletisim.html">Görüşme talep edin</a></div>
+</div></section>
+<section class="bolum ton"><div class="kap iki-sutun">
+  <div><h2>Nasıl kullanılır?</h2></div>
+  <div class="arac-yardim">
+    <h3>E-fatura dosyaları</h3>
+    <p>Gelen e-faturalarınızı e-fatura portalınızdan, entegratörünüzün panelinden ya da muhasebe programınızdan XML veya ZIP olarak indirin.
+    Birden çok dosyayı aynı anda seçebilir, klasördeki tüm faturaları sürükleyip bırakabilirsiniz. ZIP içindeki XML dosyaları otomatik okunur.</p>
+    <h3>Excel / CSV listesi</h3>
+    <p>Muhasebe programınızdan alış faturası kalem listesini Excel'e aktarın. Başlık satırında <b>Tarih</b>, <b>Tedarikçi</b> (ya da Cari),
+    <b>Fatura No</b>, <b>Ürün</b> (ya da Stok Adı / Açıklama), <b>Miktar</b>, <b>Birim</b> ve <b>Birim Fiyat</b> (ya da Tutar) sütunları bulunmalı.</p>
+    <h3>Sonuçları nasıl okumalı?</h3>
+    <p>Fiyatların sürekli arttığı dönemlerde her yeni alım bir miktar pahalı görünür; bu yüzden karşılaştırma tüm geçmişle değil, seçtiğiniz pencere içindeki önceki alımlarla yapılır.
+    İşaretlenen her alım hata değildir; gözden geçirilmesi gereken alımdır. Ayrıntısı için <a href="../blog/alis-faturalarinda-fiyat-sapmasi.html">ilgili yazımıza</a> bakabilirsiniz.</p>
+  </div>
+</div></section>
+
+</main>
+<footer class="alt">
+  <div class="kap">
+    <div class="alt-ust">
+      <a class="logo" href="../index.html" aria-label="Nirengi Danışmanlık ana sayfa"><span class="wm">N<span class="i">I</span>RENG<span class="i">I</span></span><span class="wm-alt">Danışmanlık</span></a>
+      <p>Mali müşavirlik, finans danışmanlığı ve kurumsal sistemler. Konya.</p>
+    </div>
+    <div class="alt-izgara">
+      <div><h4>Hizmetler</h4><a href="../hizmetler.html#mali-analiz">Mali analiz ve yönetim raporu</a><a href="../hizmetler.html#nakit">Nakit akışı ve finansman</a><a href="../hizmetler.html#alacak">Alacak ve tahsilat yönetimi</a><a href="../hizmetler.html#maliyet">Maliyet ve kârlılık</a><a href="../hizmetler.html#satin-alma">Satın alma ve fatura analizi</a><a href="../hizmetler.html#stok">Stok analizi</a><a href="../hizmetler.html#erp">ERP ve dijital dönüşüm</a><a href="../hizmetler.html#pano">Yönetim panosu ve süreç tasarımı</a><a href="../hizmetler.html#mevzuat">Vergi, mevzuat ve mali müşavirlik</a><a href="../hizmetler.html#tesvik">Teşvik ve hibe danışmanlığı</a><a href="../hizmetler.html#konkordato">Konkordato ve finansal yeniden yapılandırma</a></div>
+      <div><h4>Nirengi</h4><a href="../araclar/index.html">Ücretsiz araçlar</a><a href="../ekip.html">Ekip</a><a href="../blog/index.html">Yazılar</a><a href="../iletisim.html">İletişim</a></div>
+      <div><h4>İletişim</h4><a href="mailto:emrecrn@gmail.com">emrecrn@gmail.com</a><span>Konya</span></div>
+    </div>
+    <div class="telif"><span>© 2026 Nirengi Danışmanlık</span><span>Bu sitedeki yazılar genel bilgilendirme amaçlıdır.</span></div>
+  </div>
+</footer>
+</body>
+</html>
