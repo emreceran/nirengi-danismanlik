@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://emreceran.github.io/nirengi-danismanlik/sitemap.xml
