@@ -222,3 +222,11 @@ p { margin: 0 0 1em; }
 .bolum-bas .ust-yazi { color: var(--vurgu-koyu); font-size: .78rem; }
 .kahraman-ic > *, .iki-sutun > *, .hizmet-detay > *, .ekip-kart > * { min-width: 0; }
 h1, h2, h3 { overflow-wrap: break-word; }
+.hizmet-kart.one-cikan { grid-column: 1 / -1; display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; background: var(--lacivert); border-color: var(--lacivert); color: #fff; padding: 36px; }
+.hizmet-kart.one-cikan h3 { color: #fff; font-size: 1.5rem; }
+.hizmet-kart.one-cikan p { color: rgba(255, 255, 255, .78); font-size: 1rem; }
+.hizmet-kart.one-cikan .ikon { background: rgba(200, 121, 58, .22); color: #e3a46f; display: inline-block; vertical-align: middle; margin-right: 12px; }
+.hizmet-kart.one-cikan .etiket { background: var(--vurgu); color: #fff; vertical-align: middle; }
+.hizmet-kart.one-cikan .tik li { border-bottom-color: rgba(255, 255, 255, .15); color: rgba(255, 255, 255, .9); }
+.hizmet-kart.one-cikan .tik li::before { border-color: #e3a46f; }
+@media (max-width: 900px) { .hizmet-kart.one-cikan { grid-template-columns: 1fr; gap: 16px; padding: 26px; } }
