@@ -345,3 +345,25 @@ p { margin: 0 0 1em; }
   .rontgen-bolum { break-inside: avoid; }
   .r-satir { grid-template-columns: 150px 140px 70px 1fr; }
 }
+
+/* Düzeltmeler: kurucu ortaklar listesi, sektörler, form taşması */
+.yetki-liste .kucuk-bas { margin-bottom: 12px; }
+.yetki-liste li { gap: 2px; }
+.yetki-liste .y-unvan { color: var(--yesil); font-size: .88rem; font-weight: 500; }
+.yetki-liste .metin-bag { display: inline-block; margin-top: 20px; }
+.sektor-bas { margin: 80px 0 28px; padding-top: 28px; border-top: 1px solid var(--cizgi); display: grid; grid-template-columns: 5fr 7fr; gap: 80px; align-items: baseline; }
+.sektor-bas h3 { font-size: 1.5rem; font-weight: 500; margin: 0; }
+.sektor-bas p { color: var(--soluk); margin: 0; }
+.sektor-izgara { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 40px; }
+.sektor-izgara div { padding: 18px 0; border-bottom: 1px solid var(--cizgi); display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.sektor-izgara strong { font-family: var(--serif); font-weight: 500; font-size: 1.12rem; color: var(--murekkep); }
+.sektor-izgara span { color: var(--soluk); font-size: .9rem; }
+.iletisim-izgara { display: grid; grid-template-columns: 7fr 4fr; gap: 64px; align-items: start; }
+.iletisim-izgara > *, .form > *, .form label { min-width: 0; }
+.form input, .form select, .form textarea { width: 100%; min-width: 0; max-width: 100%; }
+@media (max-width: 960px) {
+  .sektor-bas, .iletisim-izgara { grid-template-columns: 1fr; gap: 12px; }
+  .iletisim-izgara { gap: 48px; }
+  .sektor-izgara { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) { .sektor-izgara { grid-template-columns: 1fr; } }

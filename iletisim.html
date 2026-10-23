@@ -31,7 +31,7 @@
 <h1>İletişim</h1>
 <p class="giris">Kısaca işletmenizi ve gündeminizdeki konuyu yazın; size dönüp bir görüşme ayarlayalım.
 İlk görüşme ücretsizdir.</p></div></section>
-<section class="bolum ust-az"><div class="kap iki-sutun">
+<section class="bolum ust-az"><div class="kap iletisim-izgara">
   <form class="form" onsubmit="event.preventDefault();var f=this;var g=[['Ad Soyad',f.ad.value],['Firma',f.firma.value],['Telefon',f.tel.value],['Konu',f.konu.value]].map(function(x){return x[0]+': '+x[1]}).join('\n')+'\n\n'+f.mesaj.value;location.href='mailto:emrecrn@gmail.com?subject='+encodeURIComponent('Görüşme talebi - '+f.firma.value)+'&body='+encodeURIComponent(g);">
     <label>Ad soyad<input name="ad" required autocomplete="name"></label>
     <label>Firma<input name="firma" required autocomplete="organization"></label>
